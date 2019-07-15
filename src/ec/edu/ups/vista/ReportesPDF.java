@@ -9,7 +9,20 @@ import ec.edu.ups.controlador.BaseDatos;
 import ec.edu.ups.controlador.ContorladorBasePersona;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -59,15 +72,15 @@ public class ReportesPDF extends javax.swing.JFrame {
     public ReportesPDF() {
         initComponents();
 
-        //ContorladorBasePersona controlador = new ContorladorPersona(url, user, password);
         BaseDatos base = new BaseDatos(url, user, password);
         base.conectar();
         ContorladorBasePersona controlador = new ContorladorBasePersona();
+        //ContorladorBasePersona controlador = new ContorladorBasePersona(url, user, password);
 
         sumas = new double[38];
         contadores = new int[38];
         acumulador = new double[38];
-        listaPersonas = controlador.printPer();
+        //listaPersonas = controlador.printPer();
 
     }
 
@@ -84,20 +97,26 @@ public class ReportesPDF extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnPdfTodo = new javax.swing.JButton();
+        btnGrafixas = new javax.swing.JButton();
         jPanelG2 = new javax.swing.JPanel();
         jPanelG1 = new javax.swing.JPanel();
         jPanelG3 = new javax.swing.JPanel();
+        btnPdfCedula = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Generar PDF");
-
-        jButton2.setText("Generar Graficos");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnPdfTodo.setText("Generar PDF General");
+        btnPdfTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnPdfTodoActionPerformed(evt);
+            }
+        });
+
+        btnGrafixas.setText("Generar Graficos");
+        btnGrafixas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrafixasActionPerformed(evt);
             }
         });
 
@@ -140,24 +159,34 @@ public class ReportesPDF extends javax.swing.JFrame {
             .addGap(0, 286, Short.MAX_VALUE)
         );
 
+        btnPdfCedula.setText("Generar PDF Cedula");
+        btnPdfCedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPdfCedulaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(226, 226, 226)
-                .addComponent(jPanelG3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(215, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanelG2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(271, 271, 271))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(226, 226, 226)
+                        .addComponent(jPanelG3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(191, 191, 191)
+                        .addComponent(btnPdfTodo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPdfCedula)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGrafixas)))
+                .addContainerGap(214, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(20, 20, 20)
@@ -169,8 +198,9 @@ public class ReportesPDF extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnPdfTodo)
+                    .addComponent(btnPdfCedula)
+                    .addComponent(btnGrafixas))
                 .addGap(18, 18, 18)
                 .addComponent(jPanelG2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -186,11 +216,42 @@ public class ReportesPDF extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnGrafixasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrafixasActionPerformed
 
         generarGraficas();
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnGrafixasActionPerformed
+
+    private void btnPdfTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPdfTodoActionPerformed
+
+        try {
+
+            BaseDatos base = new BaseDatos(url, user, password);
+            base.conectar();
+
+            File reporteArchivo = new File("src/ec/edu/ups/reportes/personas.jasper");
+
+            JasperReport reporteJasper = (JasperReport) JRLoader.loadObject(reporteArchivo);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporteJasper, null, base.getConexionBD());
+
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "ReporteTodo.pdf");
+
+            JasperViewer.viewReport(jasperPrint);
+
+            base.desconectar();
+
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        }
+
+    }//GEN-LAST:event_btnPdfTodoActionPerformed
+
+    private void btnPdfCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPdfCedulaActionPerformed
+        
+        cedulaDireccion();
+        
+    }//GEN-LAST:event_btnPdfCedulaActionPerformed
     public void condiciones() {
 
         for (Persona persona : listaPersonas) {
@@ -265,11 +326,33 @@ public class ReportesPDF extends javax.swing.JFrame {
             }
             i++;
         }
-        /*grafico1();
-         grafico2();
-         grafico3();*/
+        grafico1();
+        grafico2();
+        grafico3();
     }
 
+    public void cedulaDireccion(){
+        
+        BaseDatos base = new BaseDatos(url, user, password);
+        base.conectar();
+        
+        try{
+            
+            String cedula = JOptionPane.showInputDialog("Ingrese la cedula");
+            Map cedula1 = new HashMap();
+            cedula1.put("DIR_PERSONA", base);
+            File reporte = new File("src/ec/edu/ups/reportes/personasCed.jrxml");
+            JasperReport reporteJasper = (JasperReport) JRLoader.loadObject(reporte);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporteJasper, cedula1, base.getConexionBD());
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "ReporteCedula");
+            JasperViewer.viewReport(jasperPrint);
+            
+        }catch(JRException ex){
+            ex.printStackTrace();
+        }
+        
+    }
+    
     public void grafico1() {
         DefaultPieDataset data = new DefaultPieDataset();
         data.setValue("Entre 16-20", cont1);
@@ -381,8 +464,9 @@ public class ReportesPDF extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnGrafixas;
+    private javax.swing.JButton btnPdfCedula;
+    private javax.swing.JButton btnPdfTodo;
     private javax.swing.JPanel jPanelG1;
     private javax.swing.JPanel jPanelG2;
     private javax.swing.JPanel jPanelG3;
