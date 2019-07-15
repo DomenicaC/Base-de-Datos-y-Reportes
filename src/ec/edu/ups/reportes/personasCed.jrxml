@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b150f827-ba45-415a-a8e7-99fdf53fc5d1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="DIR_PER_CEDULA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM "DIRECCION" WHERE "DIR_PER_CEDULA" = $P{DIR_PER_CEDULA}]]>
+	</queryString>
+	<field name="DIR_CODIGO" class="java.lang.Integer"/>
+	<field name="DIR_CALLEPRINCIPAL" class="java.lang.String"/>
+	<field name="DIR_CALLESECUNDARIA" class="java.lang.String"/>
+	<field name="DIR_NUMERO" class="java.lang.Integer"/>
+	<field name="DIR_PER_CEDULA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="5" width="263" height="33" uuid="2b188bfb-57b0-4f82-b734-c0e630cf38d1"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Wood Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="63" y="39" width="200" height="22" forecolor="#FFFFFF" uuid="48015c1f-b953-459f-ada3-0cc580365345"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Wood SubTitle]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="98880b9d-2e6e-4c2c-8860-2f7d485c6615"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="111" height="15" uuid="4fd5408d-4a69-491f-a20e-a944e92ef570"/>
+				<text><![CDATA[DIR_CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="111" y="19" width="111" height="15" uuid="d57079ca-9b44-4095-a0ce-1cd402f3e0ed"/>
+				<text><![CDATA[DIR_CALLEPRINCIPAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="222" y="19" width="111" height="15" uuid="6090fc90-07ce-48b6-9ed3-34468cf327c8"/>
+				<text><![CDATA[DIR_CALLESECUNDARIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="333" y="19" width="111" height="15" uuid="b3783130-05e9-4612-8380-2aac485e3874"/>
+				<text><![CDATA[DIR_NUMERO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="444" y="19" width="111" height="15" uuid="97fc6cef-6e7a-459a-a732-ee263fda2841"/>
+				<text><![CDATA[DIR_PER_CEDULA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="6a3f0754-a12c-407c-91af-ecec52dfcf37"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="111" height="15" uuid="95bd62fd-2edf-43db-bde5-031a9b364ab4"/>
+				<textFieldExpression><![CDATA[$F{DIR_CODIGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="111" y="0" width="111" height="15" uuid="106304ce-5fcb-4078-a6ee-8bbb76c7253f"/>
+				<textFieldExpression><![CDATA[$F{DIR_CALLEPRINCIPAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="222" y="0" width="111" height="15" uuid="c293430f-3252-439a-ac5a-d2b3201be0b8"/>
+				<textFieldExpression><![CDATA[$F{DIR_CALLESECUNDARIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="333" y="0" width="111" height="15" uuid="bc9ee096-7acd-42b3-8ee5-7cdddc4cfa2a"/>
+				<textFieldExpression><![CDATA[$F{DIR_NUMERO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="444" y="0" width="111" height="15" uuid="826805bf-784a-4e44-8727-39ad387ab75d"/>
+				<textFieldExpression><![CDATA[$F{DIR_PER_CEDULA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="0b7eb4f2-210b-4c4e-ae7f-7162d9ecf4cd"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="40bde97d-d10a-43b2-b891-e5dc2b0f2bfd"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="a7591fbf-ec39-430c-a0f3-d9a2e36356a9"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="bf0c9fa8-c339-4068-abc8-8c8628d1e329"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

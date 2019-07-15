@@ -68,20 +68,15 @@ public class ReportesPDF extends javax.swing.JFrame {
     String user = "postgres";
     String password = "johysydanny15";
     Set<Persona> listaPersonas;
+    ContorladorBasePersona controlador = new ContorladorBasePersona(url, user, password);
 
     public ReportesPDF() {
         initComponents();
 
-        BaseDatos base = new BaseDatos(url, user, password);
-        base.conectar();
-        ContorladorBasePersona controlador = new ContorladorBasePersona();
-        //ContorladorBasePersona controlador = new ContorladorBasePersona(url, user, password);
-
-        sumas = new double[38];
-        contadores = new int[38];
-        acumulador = new double[38];
-        //listaPersonas = controlador.printPer();
-
+        // BaseDatos base = new BaseDatos(url, user, password);
+        //base.conectar();
+        //ContorladorBasePersona controlador = new ContorladorBasePersona();
+        //condiciones();
     }
 
     public void generarGraficas() {
@@ -248,15 +243,20 @@ public class ReportesPDF extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPdfTodoActionPerformed
 
     private void btnPdfCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPdfCedulaActionPerformed
-        
+
         cedulaDireccion();
-        
+
     }//GEN-LAST:event_btnPdfCedulaActionPerformed
     public void condiciones() {
 
+        sumas = new double[38];
+        contadores = new int[38];
+        acumulador = new double[38];
+        listaPersonas = controlador.printPer();
+
         for (Persona persona : listaPersonas) {
             if (persona.getEdad() >= 16 && persona.getEdad() <= 20) {
-                // System.out.println(persona.toString());
+                
                 if (persona.getGenero().equals("Masculino")) {
                     conp1++;
                     suma1 = suma1 + persona.getSueldo();
@@ -269,8 +269,7 @@ public class ReportesPDF extends javax.swing.JFrame {
             }
 
             if (persona.getEdad() >= 21 && persona.getEdad() <= 30) {
-                //System.out.println(persona.toString());
-
+                
                 if (persona.getGenero().equals("Masculino")) {
                     conp3++;
                     suma3 = suma3 + persona.getSueldo();
@@ -283,7 +282,7 @@ public class ReportesPDF extends javax.swing.JFrame {
             }
 
             if (persona.getEdad() >= 31 && persona.getEdad() <= 40) {
-                //System.out.println(persona.toString());
+                
                 if (persona.getGenero().equals("Masculino")) {
                     conp5++;
                     suma5 = suma5 + persona.getSueldo();
@@ -296,7 +295,7 @@ public class ReportesPDF extends javax.swing.JFrame {
             }
 
             if (persona.getEdad() >= 41) {
-                //System.out.println(persona.toString());
+                
                 if (persona.getGenero().equals("Masculino")) {
                     conp7++;
                     suma7 = suma7 + persona.getSueldo();
@@ -331,28 +330,29 @@ public class ReportesPDF extends javax.swing.JFrame {
         grafico3();
     }
 
-    public void cedulaDireccion(){
-        
+    public void cedulaDireccion() {
+
         BaseDatos base = new BaseDatos(url, user, password);
         base.conectar();
-        
-        try{
-            
+
+        try {
+
             String cedula = JOptionPane.showInputDialog("Ingrese la cedula");
+
             Map cedula1 = new HashMap();
-            cedula1.put("DIR_PERSONA", base);
-            File reporte = new File("src/ec/edu/ups/reportes/personasCed.jrxml");
+            cedula1.put("DIR_PER_CEDULA", cedula);
+            File reporte = new File("src/ec/edu/ups/reportes/personasCed.jasper");
             JasperReport reporteJasper = (JasperReport) JRLoader.loadObject(reporte);
             JasperPrint jasperPrint = JasperFillManager.fillReport(reporteJasper, cedula1, base.getConexionBD());
-            JasperExportManager.exportReportToPdfFile(jasperPrint, "ReporteCedula");
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "ReporteCedula.pdf");
             JasperViewer.viewReport(jasperPrint);
-            
-        }catch(JRException ex){
+
+        } catch (JRException ex) {
             ex.printStackTrace();
         }
-        
+
     }
-    
+
     public void grafico1() {
         DefaultPieDataset data = new DefaultPieDataset();
         data.setValue("Entre 16-20", cont1);
@@ -377,7 +377,7 @@ public class ReportesPDF extends javax.swing.JFrame {
     }
 
     public void grafico2() {
-        // Fuente de Datos
+
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.setValue((suma2 / conp2), "Mujeres", "16-20");
         dataset.setValue((suma1 / conp1), "Hombres", "16-20");
@@ -385,17 +385,20 @@ public class ReportesPDF extends javax.swing.JFrame {
         dataset.setValue((suma3 / conp3), "Hombres", "21-30");
         dataset.setValue((suma6 / conp6), "Mujeres", "31-40");
         dataset.setValue((suma5 / conp5), "Hombres", "31-40");
-        dataset.setValue(0, "Mujeres", "Mayores 40");
+        dataset.setValue((suma8 / conp8), "Mujeres", "Mayores 40");
         dataset.setValue((suma7 / conp7), "Hombres", "Mayores 40");
 
         // Creando el Grafico
-        JFreeChart chart = ChartFactory.createBarChart3D("Promedio Salario por Genero", "Genero", "Salario",
+        
+        JFreeChart chart = ChartFactory.createBarChart3D("Promedio de Salario", "Genero", "Salario",
                 dataset, PlotOrientation.VERTICAL, true, true, false);
-        chart.getTitle().setPaint(Color.black);
+        
+        chart.getTitle().setPaint(Color.BLUE);
         CategoryPlot p = chart.getCategoryPlot();
         p.setRangeGridlinePaint(Color.red);
         // Mostrar Grafico
         ChartPanel chartPanel = new ChartPanel(chart);
+
         jPanelG2.setLayout(new java.awt.BorderLayout());
         jPanelG2.add(chartPanel, BorderLayout.CENTER);
         jPanelG2.validate();
