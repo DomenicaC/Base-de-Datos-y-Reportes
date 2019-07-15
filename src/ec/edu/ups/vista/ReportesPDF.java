@@ -360,7 +360,6 @@ public class ReportesPDF extends javax.swing.JFrame {
         data.setValue("Entre 31-40", cont3);
         data.setValue("Mayores a 40", cont4);
 
-        // Creando el Grafico
         JFreeChart chart = ChartFactory.createPieChart(
                 "Promedio por Edades",
                 data,
@@ -368,7 +367,6 @@ public class ReportesPDF extends javax.swing.JFrame {
                 true,
                 false);
 
-        // Mostrar Grafico
         ChartPanel frame = new ChartPanel(chart);
         jPanelG1.setLayout(new java.awt.BorderLayout());
         jPanelG1.add(frame, BorderLayout.CENTER);
@@ -388,15 +386,13 @@ public class ReportesPDF extends javax.swing.JFrame {
         dataset.setValue((suma8 / conp8), "Mujeres", "Mayores 40");
         dataset.setValue((suma7 / conp7), "Hombres", "Mayores 40");
 
-        // Creando el Grafico
-        
         JFreeChart chart = ChartFactory.createBarChart3D("Promedio de Salario", "Genero", "Salario",
                 dataset, PlotOrientation.VERTICAL, true, true, false);
         
         chart.getTitle().setPaint(Color.BLUE);
         CategoryPlot p = chart.getCategoryPlot();
         p.setRangeGridlinePaint(Color.red);
-        // Mostrar Grafico
+
         ChartPanel chartPanel = new ChartPanel(chart);
 
         jPanelG2.setLayout(new java.awt.BorderLayout());
@@ -414,12 +410,10 @@ public class ReportesPDF extends javax.swing.JFrame {
             ed++;
         }
 
-        // Creando el Grafico
         JFreeChart chart = ChartFactory.createLineChart("Promedio por Edad",
                 "Edades", "Salario", line_chart_dataset, PlotOrientation.VERTICAL,
                 true, true, false);
 
-        // Mostrar Grafico
         ChartPanel chartPanel1 = new ChartPanel(chart);
         jPanelG3.setLayout(new java.awt.BorderLayout());
         jPanelG3.add(chartPanel1, BorderLayout.CENTER);
